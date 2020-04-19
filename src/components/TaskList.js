@@ -13,7 +13,11 @@ const useStyles = makeStyles((theme) => ({
     root: {
         width: '100%',
         maxWidth: 360,
-        backgroundColor: theme.palette.background.paper,
+        backgroundColor: '#6772e5',
+        border: 10,
+        borderRadius: 3,
+        boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+        height: 50,
     },
 }));
 
@@ -29,11 +33,28 @@ class TaskList extends React.Component {
         this.setState({ [e]: !this.state[e] });
     };
 
+    // createListItem given the parameters
+    createListItem(prim, secon) {
+
+        return (
+            <ListItem>
+                <ListItemAvatar>
+                    <Avatar>
+                        <AccessTime />
+                   </Avatar>
+                </ListItemAvatar>
+                <ListItemText primary={prim} secondary={secon} />
+            </ListItem>
+       )
+    }
+
+
     getList() {
         const classes = this.props;
 
         return (
             <List className={classes.root}>
+                {this.createListItem("primary task", "secondary task")}
                 <ListItem>
                     <ListItemAvatar>
                         <Avatar>
@@ -56,7 +77,7 @@ class TaskList extends React.Component {
                             <AccessTime />
                         </Avatar>
                     </ListItemAvatar>
-                    <ListItemText primary="Task C" secondary="task defails" />
+                    <ListItemText primary="Task C" secondary="task details" />
                 </ListItem>
             </List>
         );
