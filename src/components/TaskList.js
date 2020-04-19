@@ -33,7 +33,7 @@ class TaskList extends React.Component {
         this.setState({ [e]: !this.state[e] });
     };
 
-    // createListItem given the parameters
+    // createListItem generate single item given primary and secondary text
     createListItem(prim, secon) {
 
         return (
@@ -41,44 +41,26 @@ class TaskList extends React.Component {
                 <ListItemAvatar>
                     <Avatar>
                         <AccessTime />
-                   </Avatar>
+                    </Avatar>
                 </ListItemAvatar>
                 <ListItemText primary={prim} secondary={secon} />
             </ListItem>
-       )
+        )
     }
 
 
-    getList() {
+    // createListView a full list view with multiple parsed list elements
+    createListView() {
         const classes = this.props;
+
+        const items  = []
+        for (let i = 0; i < 5; i++) {
+            items.push(this.createListItem("Task " + i.toString(), "item" + i.toString()))
+        }
 
         return (
             <List className={classes.root}>
-                {this.createListItem("primary task", "secondary task")}
-                <ListItem>
-                    <ListItemAvatar>
-                        <Avatar>
-                            <AccessTime />
-                        </Avatar>
-                    </ListItemAvatar>
-                    <ListItemText primary="Task A" secondary="task details" />
-                </ListItem>
-                <ListItem>
-                    <ListItemAvatar>
-                        <Avatar>
-                            <AccessTime />
-                        </Avatar>
-                    </ListItemAvatar>
-                    <ListItemText primary="Task B" secondary="task details" />
-                </ListItem>
-                <ListItem>
-                    <ListItemAvatar>
-                        <Avatar>
-                            <AccessTime />
-                        </Avatar>
-                    </ListItemAvatar>
-                    <ListItemText primary="Task C" secondary="task details" />
-                </ListItem>
+                {items}
             </List>
         );
     }
@@ -88,7 +70,7 @@ class TaskList extends React.Component {
         console.log(items)
         return (
             <div>
-                {this.getList()}
+                {this.createListView()}
             </div>
         );
     }
