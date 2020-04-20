@@ -8,6 +8,8 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import AccessTime from '@material-ui/icons/AccessTime';
 import PropTypes from 'prop-types';
+import Axios from 'axios';
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -21,17 +23,32 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-function getItems() {
-    const items = "";
-    return items;
-}
 
 class TaskList extends React.Component {
 
-    state = { };
-    handleClick = (e) => {
-        this.setState({ [e]: !this.state[e] });
-    };
+    constructor() {
+        super();
+
+        this.state = {
+
+            tasks : [],
+            persons: []
+        }
+    }
+
+    componentDidMount() {
+
+        Axios.get('http://localhost:8000/GetAllTasks')
+            .then(res => {
+                console.log(res.data)
+
+                this.setState( { tasks: res.data})
+            })
+
+
+        console.log("tasks" + this.state.tasks.Name)
+
+    }
 
     // createListItem generate single item given primary and secondary text
     createListItem(prim, secon) {
@@ -48,26 +65,25 @@ class TaskList extends React.Component {
         )
     }
 
-
     // createListView a full list view with multiple parsed list elements
     createListView() {
         const classes = this.props;
 
-        const items  = []
-        for (let i = 0; i < 5; i++) {
-            items.push(this.createListItem("Task " + i.toString(), "item" + i.toString()))
+        // create task list
+        // @TODO: consider a map based implementation
+        const taskList  = []
+        for (let i = 0; i < this.state.tasks.length; i++) {
+            taskList.push(this.createListItem(this.state.tasks[i].Name, this.state.tasks[i].Project))
         }
 
         return (
             <List className={classes.root}>
-                {items}
+                {taskList}
             </List>
         );
     }
 
     render() {
-        const items = getItems();
-        console.log(items)
         return (
             <div>
                 {this.createListView()}
