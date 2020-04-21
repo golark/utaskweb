@@ -10,7 +10,6 @@ import AccessTime from '@material-ui/icons/AccessTime';
 import PropTypes from 'prop-types';
 import Axios from 'axios';
 
-
 const useStyles = makeStyles((theme) => ({
     root: {
         width: '100%',
@@ -22,7 +21,6 @@ const useStyles = makeStyles((theme) => ({
         height: 50,
     },
 }));
-
 
 class TaskList extends React.Component {
 
@@ -38,7 +36,7 @@ class TaskList extends React.Component {
 
     componentDidMount() {
 
-        Axios.get('http://localhost:8000/GetAllTasks')
+        Axios.get('http://localhost:8091/gettasks')
             .then(res => {
                 console.log(res.data)
 
@@ -73,7 +71,8 @@ class TaskList extends React.Component {
         // @TODO: consider a map based implementation
         const taskList  = []
         for (let i = 0; i < this.state.tasks.length; i++) {
-            taskList.push(this.createListItem(this.state.tasks[i].Name, this.state.tasks[i].Project))
+            const task = this.state.tasks[i]
+            taskList.push(this.createListItem(task.T.TaskName + " / " + task.T.ProjectName, task.SDate + "  " + task.STime))
         }
 
         return (
