@@ -91,8 +91,5 @@ class TaskList extends React.Component {
     }
 }
 
-TaskList.propTypes = {
-    classes: PropTypes.object.isRequired,
-};
 
 export default TaskList;
